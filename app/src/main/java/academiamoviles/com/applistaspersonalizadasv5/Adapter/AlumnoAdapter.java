@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import academiamoviles.com.applistaspersonalizadasv5.MainActivity;
 import academiamoviles.com.applistaspersonalizadasv5.Modelo.Alumno;
 import academiamoviles.com.applistaspersonalizadasv5.R;
+import academiamoviles.com.applistaspersonalizadasv5.View.RecyclerViewOnItemClickListener;
 
 /**
  * Created by jledesma on 24/09/2016.
@@ -21,6 +22,8 @@ public class AlumnoAdapter extends RecyclerView.Adapter<AlumnoAdapter.AlumnoAdap
     Context context;
     int alumno_row;
     ArrayList<Alumno> list_alumno;
+
+    private RecyclerViewOnItemClickListener recyclerViewOnItemClickListener;
 
     public AlumnoAdapter(Context mainActivity, int alumno_row, ArrayList<Alumno> list_alumnos) {
 
@@ -39,6 +42,16 @@ public class AlumnoAdapter extends RecyclerView.Adapter<AlumnoAdapter.AlumnoAdap
     @Override
     public void onBindViewHolder(AlumnoAdapterViewHolder holder, int position) {
 
+        Alumno alumno = list_alumno.get(position);
+
+        holder.tv_nombre.setText(alumno.getNombre());
+        holder.tv_curso.setText(alumno.getCurso());
+
+    }
+
+    public void addItem(int position, Alumno data){
+        list_alumno.add(position,data);
+        notifyItemInserted(position);
     }
 
     @Override
@@ -46,7 +59,8 @@ public class AlumnoAdapter extends RecyclerView.Adapter<AlumnoAdapter.AlumnoAdap
         return list_alumno.size();
     }
 
-    public class AlumnoAdapterViewHolder extends RecyclerView.ViewHolder {
+    public class AlumnoAdapterViewHolder extends RecyclerView.ViewHolder
+            implements View.OnClickListener {
 
         TextView tv_nombre,tv_curso;
 
@@ -55,6 +69,12 @@ public class AlumnoAdapter extends RecyclerView.Adapter<AlumnoAdapter.AlumnoAdap
 
             tv_nombre = (TextView) itemView.findViewById(R.id.tv_alumno);
             tv_curso = (TextView) itemView.findViewById(R.id.tv_curso);
+            itemView.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            recyclerViewOnItemClickListener.onClick(v,getAdapterPosition());
         }
     }
 }
