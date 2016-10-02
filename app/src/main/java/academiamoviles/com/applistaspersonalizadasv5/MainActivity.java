@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -64,10 +65,11 @@ public class MainActivity extends AppCompatActivity implements IMainActivity{
         mAdapter = new AlumnoAdapter(this,R.layout.alumno_row,list_alumnos, new RecyclerViewOnItemClickListener() {
             @Override
             public void onClick(View v, int position) {
-
+                mAdapter.removeItem(position);
             }
         });
         recycler_alumnos.setAdapter(mAdapter);
+        configurarAnimator();
     }
 
     @Override
@@ -87,7 +89,10 @@ public class MainActivity extends AppCompatActivity implements IMainActivity{
 
     @Override
     public void configurarAnimator() {
-
+        RecyclerView.ItemAnimator itemAnimator = new DefaultItemAnimator();
+        itemAnimator.setAddDuration(1000);
+        itemAnimator.setRemoveDuration(1000);
+        recycler_alumnos.setItemAnimator(itemAnimator);
     }
 
     @Override

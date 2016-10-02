@@ -25,11 +25,13 @@ public class AlumnoAdapter extends RecyclerView.Adapter<AlumnoAdapter.AlumnoAdap
 
     private RecyclerViewOnItemClickListener recyclerViewOnItemClickListener;
 
-    public AlumnoAdapter(Context mainActivity, int alumno_row, ArrayList<Alumno> list_alumnos) {
+    public AlumnoAdapter(Context mainActivity, int alumno_row, ArrayList<Alumno> list_alumnos,
+                         RecyclerViewOnItemClickListener listener) {
 
         this.context = mainActivity;
         this.alumno_row = alumno_row;
         this.list_alumno = list_alumnos;
+        this.recyclerViewOnItemClickListener = listener;
 
     }
 
@@ -52,6 +54,11 @@ public class AlumnoAdapter extends RecyclerView.Adapter<AlumnoAdapter.AlumnoAdap
     public void addItem(int position, Alumno data){
         list_alumno.add(position,data);
         notifyItemInserted(position);
+    }
+
+    public void removeItem(int position){
+        list_alumno.remove(position);
+        notifyItemRemoved(position);
     }
 
     @Override
